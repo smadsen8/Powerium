@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inputs</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+
+            <form method="POST" action="/inputs">
+                <!-- Questions for Form -->
+                <label for="showerLength">How long are your showers in minutes?</label><br>
+                <input type="number" id="showerLengthID" name="showerLengthName" placeholder="shower length" required><br><br><br>
+                
+                <label for="showerTemp">Do you use hot or cold water for showers?</label><br>
+                <input type="radio" id="hotWater" name="waterTemp" value="Hot" required>
+                <label for="hotWater">Hot</label><br>
+                <input type="radio" id="coldWater" name="waterTemp" value="Cold" required>
+                <label for="coldWater">Cold</label><br><br><br>
+
+                <label for="showerTemp">Do you eat meat or are vegetarian?</label><br>
+                <input type="radio" id="meatEater" name="diet" value="meat" required>
+                <label for="meatEater">Meat Eater</label><br>
+                <input type="radio" id="coldWater" name="diet" value="vegetarian" required>
+                <label for="Vegetarian">Vegetarian</label><br><br><br>
+
+                <label for="showerLength">What temperature, in Fahrenheit, do you keep your air conditioning?</label><br>
+                <input type="number" id="airConditioningID" name="airConditioningName" placeholder="air conditioning temp" required><br><br><br>
+
+                <label for="numEatingOut">On average, how many times do you eat out in a week?</label><br>
+                <input type="number" id="eatingOutID" name="eatingOutName" placeholder="num. eating out" required><br><br><br>
+
+                <input type="submit" value="Submit">
+                <input type="reset">
+            </form>
+        </div>
+
+        {{>footer}}
+    </body>
+</html>
