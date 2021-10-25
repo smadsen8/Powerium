@@ -1,0 +1,88 @@
+/* header {
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+header a {
+  color: #fc6500;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+header button {
+  background-color: #afbaca;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+header button:hover {
+  opacity: 1;
+} */
+
+header h1 {
+  font-size: 64px;
+  text-shadow: 0 0 0.1em #fff, 0 0 0.2em #fff, 0 0 0.3em #fff,
+    0 0 0.4em rgb(255, 212, 119), 0 0 0.6em rgb(255, 153, 0);
+  /* 0 0 0.8em rgb(255, 153, 0), 0 0 1em rgb(255, 153, 0),
+    0 0 1.2em rgb(255, 153, 0); */
+  color: rgb(255, 145, 0);
+  margin-bottom: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style the navbar */
+.topnav {
+  overflow: hidden;
+}
+
+/* Navbar links */
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Style the input container */
+.topnav .login-container {
+  float: right;
+}
+
+/* Style the button inside the input container */
+.topnav .login-container button {
+  float: right;
+  padding: 6px;
+  margin-top: 80px;
+  margin-right: 16px;
+  background: rgb(245, 136, 34);
+  font-size: 32px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+  background: rgb(255, 148, 86);
+}
