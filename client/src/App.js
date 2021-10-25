@@ -1,48 +1,77 @@
-import React from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import NavigationBar from "./features/NavigationBar";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-// import ProjectsPage from './pages/ProjectsPage';
-import ContactPage from "./pages/ContactPage";
-import Footer from "./features/Footer.js";
-import LearnPage from "./pages/LearnPage.js";
-import AddOfficersPage from "./pages/AddOfficersPage.js";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import AddLearnPage from "./pages/AddLearnPage";
+const path = require('path')
+const express = require('express')
+const hbs = require('hbs')
+const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded({extended: false});
 
-function App() {
-  return (
-    <Router>
-      <div className="app">
-        <NavigationBar />
-        <div className="content">
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/About">
-              <AboutPage />
-            </Route>
-            <Route path="/Learn">
-              <LearnPage />
-            </Route>
-            <Route path="/Contact">
-              <ContactPage />
-            </Route>
-            <Route path="/Admin">
-              <AddOfficersPage />
-            </Route>
-            <Route path="/AdminLearn">
-              <AddLearnPage />
-            </Route>
-          </Switch>
-        </div>
-        <Footer />
-      </div>
-    </Router>
-  );
-}
+const app = express()
+const port = process.env.PORT || 4000
 
-export default App;
+//Define path for Express config
+const publicDirectoryPath = path.join(__dirname,'../public')
+const viewsPath = path.join(__dirname, '../templates/views')
+const partialPath = path.join(__dirname,'../templates/partials')
+
+//Setup handlebars engine and views location
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+hbs.registerPartials(partialPath)
+
+//Setup static directory to serve
+app.use(express.static(publicDirectoryPath))
+
+app.get('', (req, res) => {
+    res.render('homePage', {
+        title: 'Powerium',
+    })
+})
+
+app.get('/login', (req, res) => {
+    res.render('login', {
+        title: 'Login',
+    })
+})
+
+app.post('/login', urlencodedParser, (req, res) => {
+    res.redirect('/');
+})
+
+app.get('/inputs', (req, res) => {
+    res.render('inputs', {
+        title: 'Inputs',
+    })
+})
+
+app.post('/inputs', urlencodedParser, (req, res) => {
+    console.log(req.body);
+    res.redirect('/');
+})
+
+app.get('/trends', (req, res) => {
+    res.render('trends', {
+        title: 'Personalized Trends',
+    })
+})
+
+app.get('/suggestions', (req, res) => {
+    res.render('suggestions', {
+        title: 'Personalized Suggestions',
+    })
+})
+
+app.get('/about', (req, res) => {
+    res.render('about', {
+        title: 'About Powerium',
+    })
+})
+
+app.get('/contact', (req, res) => {
+    res.render('contact', {
+        title: 'Help',
+    })
+})
+
+
+app.listen(port, () => {
+    console.log('Server is up on port '+port)
+})
