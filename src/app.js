@@ -2,6 +2,8 @@ const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
 const bodyParser = require('body-parser');
+const { TestWatcher } = require('@jest/core');
+const { hasUncaughtExceptionCaptureCallback } = require('process');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 const app = express()
@@ -33,7 +35,23 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', urlencodedParser, (req, res) => {
-    res.redirect('/');
+    if(req.body.action == 'Login'){
+        //check to make sure valid login credentials here...NEEDS TO BE CODED
+        res.redirect('/');
+
+    } else if(req.body.action == 'Register'){
+        res.redirect('/register')
+    }
+})
+
+app.get('/register', (req, res) => {
+    res.render('register', {
+        title: 'Register Account',
+    })
+})
+
+app.post('/register', urlencodedParser, (req, res) => {
+    res.redirect('/login');
 })
 
 app.get('/inputs', (req, res) => {
@@ -44,8 +62,30 @@ app.get('/inputs', (req, res) => {
 
 app.post('/inputs', urlencodedParser, (req, res) => {
     console.log(req.body);
+
+    // test('Test For Valid Water Heater Temperature', () => {
+    //     expect(waterHeaterValid(req.body.waterHeaterTemp)).toBe(true);
+    // })
+
+    // test('Test For Valid Shower Length Time', () => {
+    //     expect(showerLengthValid(req.body.showerLengthTime)).toBe(true);
+    // })
+
+    // test('Test For Valid Air Conditioning Temperature', () => {
+    //     expect(airConditioningValid(req.body.airConditioingTemp)).toBe(true);
+    // })
+
+    // test('Test For Valid Eating Out Number', () => {
+    //     expect(eatingOutValid(req.body.eatingOutNum)).toBe(true);
+    // })
+
+
     res.redirect('/');
 })
+
+function sum(a,b){
+    return a+b;
+}
 
 app.get('/trends', (req, res) => {
     res.render('trends', {
