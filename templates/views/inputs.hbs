@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inputs</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+
+            <form method="POST" action="/inputs">
+                <!-- Questions for Form -->
+
+                <label for="bulbType">Do you use LED light bulbs in your home?</label><br>
+                <input type="radio" id="LEDUser" name="lightType" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonLEDUser" name="lightType" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="naturalLight">Do utilize natural light?</label><br>
+                <input type="radio" id="naturalUser" name="natType" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonNaturalUser" name="natType" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="windowCover">Do have window tint/coverings in your home?</label><br>
+                <input type="radio" id="tintUser" name="tintUse" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonTintUser" name="tintUse" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="thermoType">Do have a smart thermostat?</label><br>
+                <input type="radio" id="smartUser" name="thermoType" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonsmartUser" name="thermoType" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="plugType">Do utilize smart plugs?</label><br>
+                <input type="radio" id="smartPlugUser" name="plugType" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonSmartPlugUser" name="plugType" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="waterHeaterTemp">What temperature, in Fahrenheit, do you keep your water heater?</label><br>
+                <input type="number" id="waterHeaterID" name="waterHeaterName" placeholder="Water Heater Temp." required><br><br><br>
+
+                <label for="sinkRun">Do you leave the sink water on when you brush your teeth?</label><br>
+                <input type="radio" id="sinkUser" name="sinkUsage" value="Yes" required>
+                <label for="hotWater">Yes</label><br>
+                <input type="radio" id="nonsinkUser" name="sinkUsage" value="No" required>
+                <label for="coldWater">No</label><br><br><br>
+
+                <label for="showerLength">How long are your showers in minutes?</label><br>
+                <input type="number" id="showerLengthID" name="showerLengthName" placeholder="Shower Length" required><br><br><br>
+
+                <label for="showerTemp">Do you use hot or cold water for showers?</label><br>
+                <input type="radio" id="hotWater" name="waterTemp" value="Hot" required>
+                <label for="hotWater">Hot</label><br>
+                <input type="radio" id="coldWater" name="waterTemp" value="Cold" required>
+                <label for="coldWater">Cold</label><br><br><br>
+
+                <label for="showerLength">What temperature, in Fahrenheit, do you keep your air conditioning?</label><br>
+                <input type="number" id="airConditioningID" name="airConditioningName" placeholder="Air Conditioning Temp." required><br><br><br>
+
+                <label for="numEatingOut">On average, how many times do you eat out in a week?</label><br>
+                <input type="number" id="eatingOutID" name="eatingOutName" placeholder="Weekly Meals Out" required><br><br><br>
+
+                <input type="submit" value="Submit">
+                <input type="reset">
+            </form>
+        </div>
+
+        <footer>
+        {{>footer}}
+         </footer>
+
+    </body>
+</html>
