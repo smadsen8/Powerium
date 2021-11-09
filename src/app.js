@@ -14,10 +14,16 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+//New code
+const mongoose = require('mongoose')
+const localStrategy = require('passport-local').Strategy;
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://smadsen:smadsen@userinformation.mgssl.mongodb.net/UserInformation?retryWrites=true&w=majority";
 
 
 
-const initializePassport = require('./passport-config')
+const initializePassport = require('./passport-config');
+const { assert } = require('console');
 
 initializePassport(
     passport,
@@ -25,13 +31,13 @@ initializePassport(
     id => users.find(user => user.id === id)
 )
 
-//Storing user data
-const users = []
-
-
-
 const app = express()
 const port = process.env.PORT || 4000
+
+//Connect to MongoDB
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const dbName = "UserInformation";
+
 
 //Define path for Express config
 const publicDirectoryPath = path.join(__dirname,'../public')
@@ -60,12 +66,14 @@ app.use(methodOverride('_method'))
 app.get('',checkAuthenticated,(req, res) => {
     res.render('homePage', {
         title: 'Powerium',
+        logout: 'Log Out',
     })
 })
 
 app.get('/login', checkNotAuthenticated,(req, res) => {
     res.render('login', {
         title: 'Login',
+        logout: '',
     })
 })
 
@@ -79,16 +87,6 @@ app.post('/login', checkNotAuthenticated,urlencodedParser,passport.authenticate(
     }
 })
 
-// app.post('/login', urlencodedParser, (req, res) => {
-//     if(req.body.action == 'Login'){
-//         //check to make sure valid login credentials here...NEEDS TO BE CODED
-//         res.redirect('/');
-
-//     } else if(req.body.action == 'Register'){
-//         res.redirect('/register')
-//     }
-// })
-
 app.get('/register', checkNotAuthenticated,(req, res) => {
     res.render('register', {
         title: 'Register Account',
@@ -98,74 +96,101 @@ app.get('/register', checkNotAuthenticated,(req, res) => {
 app.post('/register', checkNotAuthenticated,urlencodedParser, async(req, res) => {
     try {
         const hashedPassword =  await bcrypt.hash(req.body.password, 10)
-        users.push({
-            id: Date.now().toString(), //unique identifier, Note: If we have database then this would be automatically generated for us
+
+        await client.connect();
+        console.log('Connected Correctly to server');
+
+        const db = client.db(dbName);
+        const col = db.collection("user-info");
+
+        let userInfo = {
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword
-        })
-        res.redirect('/login')
+        };
+
+        const p = await col.insertOne(userInfo);
     }
     catch {
         res.redirect('/register')
     }
-    console.log(users) //To see if we added a user
+    finally {
+        await client.close();
+        console.log("Correctly closed client");
+        res.redirect('/login')
+    }
 })
 
 app.get('/inputs', (req, res) => {
     res.render('inputs', {
         title: 'Inputs',
+        logout: 'Log Out',
     })
 })
 
-app.post('/inputs', urlencodedParser, (req, res) => {
-    console.log(req.body);
+app.post('/inputs', urlencodedParser, async (req, res) => {
+    console.log(req.user);
 
-    // test('Test For Valid Water Heater Temperature', () => {
-    //     expect(waterHeaterValid(req.body.waterHeaterTemp)).toBe(true);
-    // })
+    try {
+        await client.connect();
+        console.log('Connected Correctly to server');
 
-    // test('Test For Valid Shower Length Time', () => {
-    //     expect(showerLengthValid(req.body.showerLengthTime)).toBe(true);
-    // })
+        const db = client.db(dbName);
+        const col = db.collection("user-inputs");
 
-    // test('Test For Valid Air Conditioning Temperature', () => {
-    //     expect(airConditioningValid(req.body.airConditioingTemp)).toBe(true);
-    // })
+        let userInputs = {
+            DateCreated: Date.now(),
+            UserId: req.user._id,
+            LEDLights: req.body.lightType,
+            NaturalLights: req.body.natType,
+            TintUse: req.body.tintUse,
+            SmartThermo: req.body.thermoType,
+            SmartPlug: req.body.plugType,
+            WaterTemp: req.body.waterHeaterName,
+            SinkUsage: req.body.sinkUsage,
+            ShowerLength: req.body.showerLengthName,
+            WaterTemp: req.body.waterTemp,
+            AirConditioningTemp: req.body.airConditioningName,
+            NumEatingOut: req.body.eatingOutName
+        };
 
-    // test('Test For Valid Eating Out Number', () => {
-    //     expect(eatingOutValid(req.body.eatingOutNum)).toBe(true);
-    // })
-
-
-    res.redirect('/');
+        const p = await col.insertOne(userInputs);
+    }
+    catch {
+        res.redirect('/inputs')
+    }
+    finally {
+        await client.close();
+        console.log("Correctly closed client");
+        res.redirect('/')
+    }
 })
-
-function sum(a,b){
-    return a+b;
-}
 
 app.get('/trends', (req, res) => {
     res.render('trends', {
         title: 'Personalized Trends',
+        logout: 'Log Out',
     })
 })
 
 app.get('/suggestions', (req, res) => {
     res.render('suggestions', {
         title: 'Personalized Suggestions',
+        logout: 'Log Out',
     })
 })
 
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About Powerium',
+        logout: 'Log Out',
     })
 })
 
 app.get('/contact', (req, res) => {
     res.render('contact', {
         title: 'Help',
+        logout: 'Log Out',
     })
 })
 
@@ -188,6 +213,7 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
+
 
 app.listen(port, () => {
     console.log('Server is up on port '+port)
