@@ -41,10 +41,12 @@ img {
 
 .chartsLeft {
   width: 40%;
+  margin: 10px;
 }
 
 .chartsRight {
   width: 40%;
+  margin: 10px;
 }
 
 .chartsCenter {

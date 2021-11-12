@@ -17,6 +17,7 @@ const methodOverride = require('method-override')
 //New code
 const mongoose = require('mongoose')
 const localStrategy = require('passport-local').Strategy;
+const  ObjectId = require('mongodb').ObjectId;
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://smadsen:smadsen@userinformation.mgssl.mongodb.net/UserInformation?retryWrites=true&w=majority";
 
@@ -129,8 +130,6 @@ app.get('/inputs', (req, res) => {
 })
 
 app.post('/inputs', urlencodedParser, async (req, res) => {
-    console.log(req.user);
-
     try {
         await client.connect();
         console.log('Connected Correctly to server');
@@ -166,10 +165,34 @@ app.post('/inputs', urlencodedParser, async (req, res) => {
     }
 })
 
-app.get('/trends', (req, res) => {
+app.get('/trends', async (req, res) => {
+
+    //Retreive user input information
+    await client.connect();
+    console.log('Connected Correctly to server');
+    const db = client.db(dbName);
+    const col = db.collection("user-inputs");
+    const user = await col.find({UserId:new ObjectId(req.user._id)}).toArray();
+    const userString = JSON.stringify(user);
+    await client.close();
+    console.log('Disconnected Correctly to server');
+
+    //test
+    // const data = JSON.parse(userString);
+    // var lengths = [];
+    // for(let i = 0; i < data.length; i++){
+    //     const tempEntry = data[i];
+    //     const tempLength = tempEntry.ShowerLength;
+    //     const tempLengthInt = parseInt(tempLength)
+    //     lengths.push(tempLengthInt);
+    //     console.log(typeof tempLengthInt)
+    // }
+    // console.log(lengths);
+
     res.render('trends', {
         title: 'Personalized Trends',
         logout: 'Log Out',
+        userMongoDBData: userString,
     })
 })
 

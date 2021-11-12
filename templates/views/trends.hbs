@@ -12,28 +12,28 @@
             {{!-- <p>This is where your personalized data graphs will appear.</p> --}}
             <div class="charts">
                 <div class="chartsLeft">
-                    <div id="waterChart"></div>
+                    <div id="showerChart"></div>
                 </div>
 
                 <div class="chartsRight">
-                    <div id="meatOrVeggieChart"></div> 
+                    <div id="airChart"></div> 
                 </div>
 
-                <div class="chartsCenter">
+                {{!-- <div class="chartsCenter">
                     <div id="airConditioningChart"></div>
-                </div>
+                </div> --}}
 
                 <div class="chartsLeft">
-                    <div id="hotOrColdWaterChart"></div>
+                    <div id="eatChart"></div>
                 </div>
 
                 <div class="chartsRight">
-                    <div id="eatingOutChart"></div>
+                    <div id="yesNoChart"></div>
                 </div>
             </div>
         </div>
 
-        <script src="/js/trendPageCharts.js"></script>
+        <script id="userInputs" userData={{userMongoDBData}} src="/js/trendPageCharts.js"></script>
         <footer>
         {{!-- {{>footer}} --}}
     </footer>
