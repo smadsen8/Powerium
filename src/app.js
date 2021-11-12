@@ -75,6 +75,7 @@ app.get('/login', checkNotAuthenticated,(req, res) => {
     res.render('login', {
         title: 'Login',
         logout: '',
+        error: req.flash('error') //For error messages
     })
 })
 
