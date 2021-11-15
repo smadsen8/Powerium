@@ -15,14 +15,14 @@ body {
 }
 
 .err-msg {
-	padding: 10px 15px;
-	background-color: #24292b;
-	border-radius: 8px;
-	margin-bottom: 15px;
+  padding: 10px 15px;
+  background-color: #24292b;
+  border-radius: 8px;
+  margin-bottom: 15px;
   /* text-shadow: 0 0 0.1em #fff, 0 0 0.2em #fff, 0 0 0.3em #fff,
     0 0 0.4em rgb(255, 212, 119), 0 0 0.6em rgb(255, 153, 0); */
   color: rgb(255, 145, 0);
-	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .charts {
@@ -104,7 +104,6 @@ button {
   transform: translate(-50%, -50%);
 }
 
-
 /* Style buttons */
 .btn {
   background-color: rgb(255, 145, 0); /* Blue background */
@@ -114,5 +113,15 @@ button {
   font-size: 16px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
   position: relative;
-  left : 1210px;
+  left: 1210px;
+}
+
+ul {
+  list-style-type: disclosure-closed;
+  color: #fc6500;
+  font-size: 2em;
+}
+
+li {
+  margin-bottom: 10px;
 }
