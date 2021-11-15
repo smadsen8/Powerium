@@ -10,9 +10,11 @@
         <div class="main-content">
             {{>header}}
             <button class="btn", onclick="location.href='/';"><i class="fa fa-home"></i> Home</button>
-            <p>This is where your personalized suggestions will appear.</p>
+            <div id="sug">
+                
+            </div>
         </div>
-
+        <script id="userSuggestions" userData={{userMongoDBData}} src="/js/suggestionPageList.js"></script>
         {{>footer}}
     </body>
 </html>
