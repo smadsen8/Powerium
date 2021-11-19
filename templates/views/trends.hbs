@@ -12,7 +12,6 @@
         <div class="main-content">
             {{>header}}
             <button class="btn", onclick="location.href='/';"><i class="fa fa-home"></i> Home</button>
-            {{!-- <p>This is where your personalized data graphs will appear.</p> --}}
             <div class="charts">
                 <div class="chartsLeft">
                     <div id="showerChart"></div>
@@ -21,10 +20,6 @@
                 <div class="chartsRight">
                     <div id="airChart"></div> 
                 </div>
-
-                {{!-- <div class="chartsCenter">
-                    <div id="airConditioningChart"></div>
-                </div> --}}
 
                 <div class="chartsLeft">
                     <div id="eatChart"></div>
@@ -38,7 +33,6 @@
 
         <script id="userTrends" userData={{userMongoDBData}} src="/js/trendPageCharts.js"></script>
         <footer>
-        {{!-- {{>footer}} --}}
     </body>
 </html>
 
